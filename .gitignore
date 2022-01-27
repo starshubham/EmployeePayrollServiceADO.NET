@@ -1,0 +1,5 @@
+.vs/
+bin/
+obj/
+EmployeePayrollServiceADO.NET.csproj
+EmployeePayrollServiceADO.NET.sln
