@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EmployeePayrollServiceADO.NET
 {
-    class EmployeeModel   // Class to map the relational data base model to a entity.
+    public class EmployeeModel   // Class to map the relational data base model to a entity.
     {
         public int EmployeeID { get; set; }
         public string EmployeeName { get; set; }
-        public double PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string Department { get; set; }
         public string Gender { get; set; }
