@@ -29,6 +29,9 @@ namespace EmployeePayrollServiceADO.NET
             //UC6
             //repository.FindGroupedByGenderRecord("M");
 
+            //UC7
+            repository.InsertIntoMultipleTablesWithTransactions(); 
+
             Console.WriteLine();
         }
 
