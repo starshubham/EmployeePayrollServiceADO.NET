@@ -8,7 +8,7 @@ namespace EmployeePayrollServiceADO.NET
 {
     public class EmployeeModel   // Class to map the relational data base model to a entity.
     {
-        public int EmployeeID { get; set; }
+        public int EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }

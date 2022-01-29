@@ -65,7 +65,7 @@ namespace EmployeePayrollServiceADO.NET
                     {
                         while (reader.Read()) //using while loop for read multiple rows.
                         {
-                            employeemodel.EmployeeID = reader.GetInt32(0);
+                            employeemodel.EmployeeId = reader.GetInt32(0);
                             employeemodel.EmployeeName = reader.GetString(1);
                             employeemodel.PhoneNumber = reader.GetString(2);
                             employeemodel.Address = reader.GetString(3);
@@ -79,7 +79,7 @@ namespace EmployeePayrollServiceADO.NET
                             employeemodel.StartDate = reader.GetDateTime(11);
                             employeemodel.City = reader.GetString(12);
                             employeemodel.Country = reader.GetString(13);
-                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}", employeemodel.EmployeeID,
+                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}", employeemodel.EmployeeId,
                                 employeemodel.EmployeeName, employeemodel.PhoneNumber, employeemodel.Address, employeemodel.Department,
                                 employeemodel.Gender, employeemodel.BasicPay, employeemodel.Deductions, employeemodel.TaxablePay,
                                 employeemodel.Tax, employeemodel.NetPay, employeemodel.StartDate, employeemodel.City, employeemodel.Country);
@@ -240,7 +240,7 @@ namespace EmployeePayrollServiceADO.NET
                         // Console.WriteLine("EmployeeId, EmployeeName, PhoneNumber, Address, Department, Gender, BasicPay, Deductions, TaxablePay, TaxablePay, Tax, NetPay, StartDate, City, Country");                                            
                         while (reader.Read()) //using while loop for read multiple rows.
                         {
-                            employeemodel.EmployeeID = reader.GetInt32(0);
+                            employeemodel.EmployeeId = reader.GetInt32(0);
                             employeemodel.EmployeeName = reader.GetString(1);
                             employeemodel.PhoneNumber = reader.GetString(2);
                             employeemodel.Address = reader.GetString(3);
@@ -254,7 +254,7 @@ namespace EmployeePayrollServiceADO.NET
                             employeemodel.StartDate = reader.GetDateTime(11);
                             employeemodel.City = reader.GetString(12);
                             employeemodel.Country = reader.GetString(13);
-                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}", employeemodel.EmployeeID,
+                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}", employeemodel.EmployeeId,
                                 employeemodel.EmployeeName, employeemodel.PhoneNumber, employeemodel.Address, employeemodel.Department,
                                 employeemodel.Gender, employeemodel.BasicPay, employeemodel.Deductions, employeemodel.TaxablePay,
                                 employeemodel.Tax, employeemodel.NetPay, employeemodel.StartDate, employeemodel.City, employeemodel.Country);
@@ -454,6 +454,68 @@ namespace EmployeePayrollServiceADO.NET
             }
         }
 
+        /* UC8:- Implement the complete ER Diagram in the Database.
+                    - Refactor the code to ensure all the queries are working.
+                    - Ensure the EmployeePayroll Class incorporates all the Entities identified in the ER Diagram.
+                    - Ensure When Adding new Employee Payroll, many tables will be impacted and transaction in the table need to be implemented.
+                    - For Department, Employee Payroll class can hold array of Department Name.
+           */
+        public void RetrieveEmployeeDetailsFromMultipleTables()
+        {
+
+            EmployeeModel employee = new EmployeeModel();
+
+            string query = @"select emp.EmployeeId, emp.EmployeeName, emp.Gender, emp.PhoneNumber, emp.Address, emp.StartDate,   
+                                    dept.DepartmentID, pay.EmployeeId, pay.BasicPay, pay.Deductions, pay.TaxablePay, 
+                                    pay.IncomeTax, pay.NetPay from employee emp, department dept, payroll pay
+                                    where emp.EmployeeId = dept.DepartmentID and emp.EmployeeId = pay.EmployeeId;";
+
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            employee.EmployeeId = reader.GetInt32(0);
+                            employee.EmployeeName = reader.GetString(1);
+                            employee.BasicPay = reader.GetInt32(2);
+                            employee.StartDate = reader.GetDateTime(3);
+                            employee.PhoneNumber = reader.GetString(4);
+                            employee.Address = reader.GetString(5);
+                            employee.Department = reader.GetString(6);
+                            employee.Gender = reader.GetString(7);
+                            employee.Deductions = reader.GetDouble(8);
+                            employee.TaxablePay = reader.GetDouble(9);
+                            employee.Tax = reader.GetDouble(10);
+                            employee.NetPay = reader.GetDouble(11);
+                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}", employee.EmployeeId, employee.EmployeeName,
+                                employee.Gender, employee.Address, employee.BasicPay, employee.StartDate, employee.PhoneNumber, employee.Address,
+                                employee.Department, employee.Deductions, employee.TaxablePay, employee.Tax, employee.NetPay);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Recod found");
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State.Equals("Open"))
+                    connection.Close();
+            }
+        }
 
     }
 }
