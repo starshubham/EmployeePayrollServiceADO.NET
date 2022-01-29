@@ -24,7 +24,10 @@ namespace EmployeePayrollServiceADO.NET
             //repository.UpdatedSalaryFromDatabase("Terisa");
 
             //UC5
-            repository.EmployeesFromForDateRange("2022-01-15");
+            //repository.EmployeesFromForDateRange("2022-01-15");
+
+            //UC6
+            //repository.FindGroupedByGenderRecord("M");
 
             Console.WriteLine();
         }
