@@ -18,7 +18,10 @@ namespace EmployeePayrollServiceADO.NET
             //repository.GetAllEmployeeData();     // View all Records            
 
             //UC3
-            repository.UpdateBasicPay("Terisa", 3000000);//UC3 update BasicPay where name is Terisa table 
+            //repository.UpdateBasicPay("Terisa", 3000000);//UC3 update BasicPay where name is Terisa table 
+
+            //UC4
+            repository.UpdatedSalaryFromDatabase("Terisa"); 
             Console.WriteLine();
         }
 
