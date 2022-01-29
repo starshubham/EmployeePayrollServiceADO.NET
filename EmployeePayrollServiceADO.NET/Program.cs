@@ -15,7 +15,10 @@ namespace EmployeePayrollServiceADO.NET
 
             //UC2
             //AddRecordInput();                  // Add Record into Store Procedure table
-            repository.GetAllEmployeeData();     // View all Records            
+            //repository.GetAllEmployeeData();     // View all Records            
+
+            //UC3
+            repository.UpdateBasicPay("Terisa", 3000000);//UC3 update BasicPay where name is Terisa table 
             Console.WriteLine();
         }
 
@@ -39,7 +42,6 @@ namespace EmployeePayrollServiceADO.NET
             model.Country = "India";
 
             Console.WriteLine(repository.AddEmployee(model) ? "Record Successfully Inserted On Table" : "Failed"); //Conditional (Ternary) operator
-            // repository.GetAllEmployeeData(); //call method to show table record
         }
     }
 }
